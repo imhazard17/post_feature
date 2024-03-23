@@ -16,7 +16,8 @@ SETUP INSTRUCTIONS:-
 i) run `npm i`
 ii) install postgresql in your pc if not already installed. Watch this installation tutorial: https://www.youtube.com/watch?v=HmziePvMwkE
 iii) open `psql` using your credentials and keep the server running while testing the api
-iv) change the .env file and in place of `********` put your own postgres user password
+iv) create .env file with apprepriate values of fields:-
+![Screenshot](https://github.com/imhazard17/user_mvp/assets/57060375/29288738-1434-45a1-838d-80adf623c58d)
 v) run `npx prisma migrate dev --name init`
 vi) run `prisma generate`
 vii) run `node app.js` and using postman run test the api endpoints
