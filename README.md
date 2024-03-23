@@ -9,7 +9,7 @@ FUNCTIONALITY:-
 - Unauthenticated users can only perform read operations
 - We can also access data about the posts of the user when we search for a user
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 
 SETUP INSTRUCTIONS:-
 
@@ -22,7 +22,7 @@ v) run `npx prisma migrate dev --name init`
 vi) run `prisma generate`
 vii) run `node app.js` and using postman run test the api endpoints
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 
 API ENDPOINTS:-     (NOTE: ** means it is a protected route hence should send authorization token in header)
                     (Did not include returned values for the api endpoints will do it later)
