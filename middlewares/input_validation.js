@@ -12,11 +12,12 @@ function userInputValidation(req, res, next) {
 
     try {
         schema.parse(req.body)
-        next()
     } catch {
         return res.status(411).json({
             err: 'Wrong inputs recieved'
         })
+    } finally {
+        next()
     }
 }
 
@@ -27,11 +28,12 @@ function postInputValidation(req, res, next) {
 
     try {
         schema.parse(req.body)
-        next()
     } catch {
         return res.status(411).json({
             err: 'Wrong inputs recieved'
         })
+    } finally {
+        next()
     }
 }
 
@@ -42,11 +44,12 @@ function commentInputValidation(req, res, next) {
 
     try {
         schema.parse(req.body)
-        next()
     } catch {
         return res.status(411).json({
             err: 'Wrong inputs recieved'
         })
+    } finally {
+        next()
     }
 }
 

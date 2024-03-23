@@ -18,7 +18,7 @@ app.use('/comment', commentRouter)
 
 app.all('*', (req, res, next) => {
     return res.status(404).json({
-        err: 'No such url exists'
+        err: `Endpoint ${req.url} does not exist`
     })
 })
 

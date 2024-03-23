@@ -6,7 +6,6 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const upload = require('../middlewares/upload')
 const { userInputValidation } = require('../middlewares/input_validation')
-const hashPasswd = require('../utils/hash_password')
 const fs = require('node:fs/promises')
 const errForward = require('../utils/errorForward')
 
@@ -78,12 +77,10 @@ router.get('/search/:username', errForward(async (req, res) => {
 
 // POST /user/auth/signup
 router.post('/auth/signup', [userInputValidation, upload.single('file')], errForward(async (req, res) => {
-    const hashedPassword = await hashPasswd(req.body.password)
-
     const createdUser = await prisma.user.create({
         data: {
             username: req.body.username,
-            password: hashedPassword,
+            password: bcrypt.hashSync(req.body.password, 10),
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             dpUrl: req.file?.path,

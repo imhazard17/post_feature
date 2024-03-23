@@ -1,4 +1,3 @@
-const { json } = require('express')
 const jwt = require('jsonwebtoken')
 
 function authentication(req, res, next) {
