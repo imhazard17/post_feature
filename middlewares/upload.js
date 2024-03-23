@@ -20,11 +20,11 @@ const storage = multer.diskStorage({
 module.exports = multer({
     storage: storage,
     limits: {
-        fileSize: 3 * 1024 * 1024
+        fileSize: 5 * 1024 * 1024
     },
     fileFilter: (req, file, cb) => {
         const ext = path.extname(file.originalname);
-        if (['.png', '.jpg', '.gif', '.jpeg'].includes(ext)) {
+        if (file.mimetype.startsWith('image/')) {
             cb(null, true)
         } else {
             cb(new Error('Wrong filetype uploaded'))
