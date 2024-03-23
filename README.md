@@ -13,14 +13,14 @@ FUNCTIONALITY:-
 
 SETUP INSTRUCTIONS:-
 
-i) run `npm i`
-ii) install postgresql in your pc if not already installed. Watch this installation tutorial: https://www.youtube.com/watch?v=HmziePvMwkE
-iii) open `psql` using your credentials and keep the server running while testing the api
-iv) create .env file with apprepriate values of fields:-
+1) run `npm i`
+2) install postgresql in your pc if not already installed. Watch this installation tutorial: https://www.youtube.com/watch?v=HmziePvMwkE
+3) open `psql` using your credentials and keep the server running while testing the api
+4) create .env file with apprepriate values of fields:-
 ![Screenshot](https://github.com/imhazard17/user_mvp/assets/57060375/29288738-1434-45a1-838d-80adf623c58d)
-v) run `npx prisma migrate dev --name init`
-vi) run `prisma generate`
-vii) run `node app.js` and using postman run test the api endpoints
+5) run `npx prisma migrate dev --name init`
+6) run `prisma generate`
+7) run `node app.js` and using postman run test the api endpoints
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -29,34 +29,34 @@ API ENDPOINTS:-     (NOTE: ** means it is a protected route hence should send au
 
 USERS:
 
-i) GET /user/all     [get all users]
-ii) GET /user/my-details**    [get current logged in user]
-iii) GET /user/search/:username     [get user based on searched username]
-iv) POST /user/auth/signup      [create new user]
-v) GET /user/auth/login     [login user]
-vi) PUT /user/change-details**        [update user details]
-vii) DELETE /user/delete-profile**        [delete logged in user]
+1) GET /user/all     [get all users]
+2) GET /user/my-details**    [get current logged in user]
+3) GET /user/search/:username     [get user based on searched username]
+4) POST /user/auth/signup      [create new user]
+5) GET /user/auth/login     [login user]
+6) PUT /user/change-details**        [update user details]
+7) DELETE /user/delete-profile**        [delete logged in user]
 
 POSTS:
 
-i) GET /post/search/:id     [search post based on postId]
-ii) GET /post/get-all/:username     [get all post of a particular username]
-iii) POST /post/create**      [create post of logged in user]
-iv) PUT /post/update/:id**      [update post based on postId]
-v) DELETE /post/delete/:id**      [delete post based on postId]
+1) GET /post/search/:id     [search post based on postId]
+2) GET /post/get-all/:username     [get all post of a particular username]
+3) POST /post/create**      [create post of logged in user]
+4) PUT /post/update/:id**      [update post based on postId]
+5) DELETE /post/delete/:id**      [delete post based on postId]
 
 COMMENT:
 
-i) GET /comment/:postId     [get all comments on a post]
-ii) POST /comment/:postId       [create comment on a post of id with postId]
-iii) PUT /comment/:id       [update comment on a comment id]
-iv) DELETE /comment/:id        [delete comment on a comment id]
+1) GET /comment/:postId     [get all comments on a post]
+2) POST /comment/:postId       [create comment on a post of id with postId]
+3) PUT /comment/:id       [update comment on a comment id]
+4) DELETE /comment/:id        [delete comment on a comment id]
 
 LIKE:
 
-i) GET /like/count/:postId      [number of like on a post]
-ii) POST /like/:postId      [create a like on a post based on postId]
-iii) DELETE /like/:id       [delete like based on id]
+1) GET /like/count/:postId      [number of like on a post]
+2) POST /like/:postId      [create a like on a post based on postId]
+3) DELETE /like/:id       [delete like based on id]
 
 (NOTE check which data to send in body by the schema of the resouces defined on `schema.prisma` file)
 (NOTE on endpoints /user/auth/signup and /user/change-details can upload minimum 0 files and maximum 1 file with key = `file` in formData field of body on postman)
