@@ -23,16 +23,15 @@ router.get('/search/:id', errForward(
         })
 
         if (!post) {
-            res.status(404).json({
+            return res.status(404).json({
                 err: `No post with id: ${req.params.id} found`,
             })
-            return;
         }
 
         post.username = post.user.username
         delete post.user
 
-        res.status(200).json({ msg: post })
+        return res.status(200).json({ msg: post })
     }
 ))
 
@@ -51,13 +50,12 @@ router.get('/get-all/:username', errForward(
         })
 
         if (!user) {
-            res.status(404).json({
+            return res.status(404).json({
                 err: `No username ${username} found`,
             })
-            return;
         }
 
-        res.status(200).json({ msg: user.posts })
+        return res.status(200).json({ msg: user.posts })
     }))
 
 // POST /post/create
@@ -65,10 +63,9 @@ router.post('/create', [postInputValidation, authentication, upload.array("file"
     const userId = req.locals.userId;
 
     if (!req.files) {
-        res.status(404).json({
+        return res.status(404).json({
             err: 'No images uploaded',
         })
-        return;
     }
 
     const uploadedFilePaths = req.files.map((file) => file.path)
@@ -85,13 +82,12 @@ router.post('/create', [postInputValidation, authentication, upload.array("file"
     })
 
     if (!createdPost) {
-        res.status(404).json({
+        return res.status(404).json({
             err: `No username ${username} found`,
         })
-        return;
     }
 
-    res.status(200).json({
+    return res.status(200).json({
         msg: `Successfully created post with post id: ${createdPost.id}`
     })
 }))
@@ -101,10 +97,9 @@ router.put('/update/:id', [postInputValidation, authentication, upload.array('fi
     const postId = parseInt(req.params.id)
 
     if (!req.files) {
-        res.status(404).json({
+        return res.status(404).json({
             err: 'No images uploaded',
         })
-        return;
     }
 
     const uploadedFilePaths = req.files.map((file) => file.path)
@@ -139,13 +134,12 @@ router.put('/update/:id', [postInputValidation, authentication, upload.array('fi
     }
 
     if (!updatedPost) {
-        res.status(404).json({
+        return res.status(404).json({
             err: 'Could not update post',
         })
-        return;
     }
 
-    res.status(200).json({
+    return res.status(200).json({
         msg: `Successfully updated post with post id: ${updatedPost.id}`
     })
 }))
@@ -166,13 +160,12 @@ router.delete('/:id', [authentication], errForward(
         })
 
         if (!deletedPost) {
-            res.status(404).json({
+            return res.status(404).json({
                 err: 'Could not delete post',
             })
-            return;
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             msg: `Successfully deleted post with post id: ${deletedPost.id}`
         })
     }

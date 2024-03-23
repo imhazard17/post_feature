@@ -17,7 +17,7 @@ app.use('/like', likeRouter)
 app.use('/comment', commentRouter)
 
 app.all('*', (req, res, next) => {
-    res.status(404).json({
+    return res.status(404).json({
         err: 'No such url exists'
     })
 })

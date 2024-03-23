@@ -19,13 +19,12 @@ router.get('/:postId', errForward(async (req, res) => {
     })
 
     if (!post) {
-        res.status(404).json({
+        return res.status(404).json({
             err: 'Could not load comments for the post'
         })
-        return;
     }
 
-    res.status(200).json({ msg: post.comments })
+    return res.status(200).json({ msg: post.comments })
 }))
 
 // POST /comment/:postId
@@ -45,13 +44,12 @@ router.post('/:postId', [commentInputValidation, authentication], errForward(asy
     });
 
     if (!comment) {
-        res.status(404).json({
+        return res.status(404).json({
             err: 'Could not create comment'
         })
-        return;
     }
 
-    res.status(200).json({
+    return res.status(200).json({
         msg: 'Comment created successfully'
     })
 }))
@@ -74,13 +72,12 @@ router.put('/:id', [authentication], errForward(async (req, res) => {
     });
 
     if (!updatedComment) {
-        res.status(404).json({
+        return res.status(404).json({
             err: 'Could not update comment'
         })
-        return;
     }
 
-    res.status(200).json({
+    return res.status(200).json({
         msg: `Comment update successfully to: ${updatedComment.content}`,
     })
 }))
@@ -97,13 +94,12 @@ router.delete('/:id', [authentication], errForward(async (req, res) => {
     });
 
     if (!deletedComment) {
-        res.status(404).json({
+        return res.status(404).json({
             err: 'Could not update comment'
         })
-        return;
     }
 
-    res.status(200).json({
+    return res.status(200).json({
         msg: 'Comment deleted successfully',
     })
 }))

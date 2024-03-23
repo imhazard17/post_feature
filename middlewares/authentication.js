@@ -3,10 +3,9 @@ const jwt = require('jsonwebtoken')
 
 function authentication(req, res, next) {
     if (!req.headers.authorization) {
-        res.status(401).json({
+        return res.status(401).json({
             err: 'You are not authorised to access this'
         })
-        return;
     }
 
     const authToken = req.headers.authorization.split(' ')[1]
@@ -17,10 +16,9 @@ function authentication(req, res, next) {
         req.locals.userId = parseInt(jwtDecode);
         next()
     } catch {
-        res.status(401).json({
+        return res.status(401).json({
             err: 'You are not authorised to access this'
         })
-        return;
     }
 }
 

@@ -21,13 +21,12 @@ router.get('/:postId', [authentication], errForward(
         })
 
         if (!post) {
-            res.status(404).json({
+            return res.status(404).json({
                 err: 'Could not like count for the post'
             })
-            return;
         }
 
-        res.status(200).json({ msg: post._count.likes })
+        return res.status(200).json({ msg: post._count.likes })
     }
 ))
 
@@ -48,13 +47,12 @@ router.get('/:postId', [authentication], errForward(
         })
 
         if (!like) {
-            res.status(404).json({
+            return res.status(404).json({
                 err: 'Could not like this post'
             })
-            return;
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             msg: 'Liked the post successfully',
         })
     }
@@ -73,13 +71,12 @@ router.get('/:id', [authentication], errForward(
         })
 
         if (!deletedLike) {
-            res.status(404).json({
+            return res.status(404).json({
                 err: 'Could not remove the like from this post'
             })
-            return;
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             msg: 'Removed like from this post successfully',
         })
     }

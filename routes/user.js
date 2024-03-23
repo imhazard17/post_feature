@@ -39,15 +39,14 @@ router.get('/my-details', [authentication], errForward(async (req, res) => {
     })
 
     if (!user) {
-        res.status(404).json({
+        return res.status(404).json({
             err: 'Error getting user details'
         })
 
-        return;
     }
 
     delete user.password
-    res.status(200).json(user)
+    return res.status(200).json(user)
 }))
 
 // GET /user/search/:username
@@ -69,10 +68,9 @@ router.get('/search/:username', errForward(async (req, res) => {
     })
 
     if (!user) {
-        res.status(404).json({
+        return res.status(404).json({
             err: `No user with username: ${username} exists`
         })
-        return;
     }
 
     res.json(user)
@@ -96,15 +94,14 @@ router.post('/auth/signup', [userInputValidation, upload.single('file')], errFor
     })
 
     if (!createdUser) {
-        res.status(404).json({
+        return res.status(404).json({
             err: 'Could not create account'
         })
-        return;
     }
 
     const token = jwt.sign(createdUser.id, process.env.JWT_SECRET)
 
-    res.status(201).json({
+    return res.status(201).json({
         msg: `successfully created account with username: ${req.body.username}`,
         authToken: token
     })
@@ -124,22 +121,20 @@ router.get('/auth/login', [userInputValidation], errForward(async (req, res) => 
     })
 
     if (!user) {
-        res.status(404).json({
+        return res.status(404).json({
             err: 'Username or password incorrect'
         })
-        return;
     }
 
     if (bcrypt.compareSync(req.body.password, user.password) === false) {
-        res.status(404).json({
+        return res.status(404).json({
             err: 'Username or password incorrect'
         })
-        return;
     }
 
     const token = jwt.sign(user.id, process.env.JWT_SECRET)
 
-    res.status(200).json({
+    return res.status(200).json({
         msg: `successfully logged into account with username: ${user.username}`,
         authToken: token
     })
@@ -181,13 +176,12 @@ router.put('/change-details', [userInputValidation, authentication, upload.singl
     })
 
     if (!updatedUser) {
-        res.status(404).json({
+        return res.status(404).json({
             err: "Could not update user details maybe due to username clash"
         })
-        return;
     }
 
-    res.status(200).json({
+    return res.status(200).json({
         msg: `User updated successfully with deatials: ${updatedUser}`
     })
 }))
@@ -216,13 +210,12 @@ router.delete('/delete-profile', [authentication], errForward(async (req, res) =
     })
 
     if (!deletedUser) {
-        res.status(404).json({
+        return res.status(404).json({
             err: "Could not delete user"
         })
-        return;
     }
 
-    res.status(200).json({
+    return res.status(200).json({
         msg: "User deleted successfully"
     })
 }))
