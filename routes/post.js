@@ -3,7 +3,7 @@ const router = express.Router()
 const prisma = require('../utils/db')
 const authentication = require('../middlewares/authentication')
 const upload = require('../middlewares/upload')
-const { postInputValidation } = require('../middlewares/input_validation')
+const { uplPostInputValidation } = require('../middlewares/input_validation')
 const fs = require('node:fs/promises')
 const errForward = require('../utils/errorForward')
 
@@ -59,7 +59,7 @@ router.get('/get-all/:username', errForward(
     }))
 
 // POST /post/create
-router.post('/create', [postInputValidation, authentication, upload.array("file", 7)], errForward(async (req, res) => {
+router.post('/create', uplPostInputValidation, authentication, upload.array("file", 7), errForward(async (req, res) => {
     const userId = req.locals.userId;
 
     if (!req.files) {
@@ -93,7 +93,7 @@ router.post('/create', [postInputValidation, authentication, upload.array("file"
 }))
 
 // PUT /post/update/:id
-router.put('/update/:id', [postInputValidation, authentication, upload.array('file', 7)], errForward(async (req, res) => {
+router.put('/update/:id', uplPostInputValidation, authentication, upload.array('file', 7), errForward(async (req, res) => {
     const postId = parseInt(req.params.id)
 
     if (!req.files) {

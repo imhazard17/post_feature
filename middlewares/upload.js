@@ -3,10 +3,10 @@ const crypto = require('crypto')
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        if (req.url === '/user/auth/signup' || req.url === '/user/change-details') {
+        if (req.originalUrl === '/user/auth/signup' || req.originalUrl === '/user/change-details') {
             cb(null, './uploads/profilePics/');
         }
-        if (req.url === '/post/create' || req.url.startsWith('/post/update')) {
+        if (req.originalUrl === '/post/create' || req.originalUrl.startsWith('/post/update')) {
             cb(null, './uploads/postPics/');
         }
     },

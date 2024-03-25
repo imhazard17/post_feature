@@ -5,7 +5,7 @@ const prisma = require('../utils/db')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const upload = require('../middlewares/upload')
-const { userInputValidation } = require('../middlewares/input_validation')
+const { userInputValidation, uplUserInputValidation } = require('../middlewares/input_validation')
 const fs = require('node:fs/promises')
 const errForward = require('../utils/errorForward')
 
@@ -76,7 +76,7 @@ router.get('/search/:username', errForward(async (req, res) => {
 }))
 
 // POST /user/auth/signup
-router.post('/auth/signup', [userInputValidation, upload.single('file')], errForward(async (req, res) => {
+router.post('/auth/signup', uplUserInputValidation, upload.single('file'), errForward(async (req, res) => {
     const createdUser = await prisma.user.create({
         data: {
             username: req.body.username,
@@ -105,7 +105,7 @@ router.post('/auth/signup', [userInputValidation, upload.single('file')], errFor
 }))
 
 // GET /user/auth/login
-router.get('/auth/login', [userInputValidation], errForward(async (req, res) => {
+router.get('/auth/login', userInputValidation, errForward(async (req, res) => {
     const user = await prisma.user.findUnique({
         where: {
             username: req.body.username
@@ -138,7 +138,7 @@ router.get('/auth/login', [userInputValidation], errForward(async (req, res) => 
 }))
 
 // PUT /user/change-details (change logged in user's profile details)
-router.put('/change-details', [userInputValidation, authentication, upload.single('file')], errForward(async (req, res) => {
+router.put('/change-details', uplUserInputValidation, authentication, upload.single('file'), errForward(async (req, res) => {
     const userId = req.locals.userId;
 
     const user = await prisma.user.findUnique({
