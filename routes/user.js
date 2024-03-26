@@ -79,10 +79,10 @@ router.get('/search/:username', errForward(async (req, res) => {
 router.post('/auth/signup', uplUserInputValidation, upload.single('file'), errForward(async (req, res) => {
     const createdUser = await prisma.user.create({
         data: {
-            username: req.body.username,
-            password: bcrypt.hashSync(req.body.password, 10),
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
+            username: req.headers.username,
+            password: bcrypt.hashSync(req.headers.password, 10),
+            firstName: req.headers.firstName,
+            lastName: req.headers.lastName,
             dpUrl: req.file?.path,
         },
         select: {
@@ -99,7 +99,7 @@ router.post('/auth/signup', uplUserInputValidation, upload.single('file'), errFo
     const token = jwt.sign(createdUser.id, process.env.JWT_SECRET)
 
     return res.status(201).json({
-        msg: `successfully created account with username: ${req.body.username}`,
+        msg: `successfully created account with username: ${req.headers.username}`,
         authToken: token
     })
 }))
@@ -150,10 +150,6 @@ router.put('/change-details', uplUserInputValidation, authentication, upload.sin
         }
     })
 
-    if(user.dpUrl) {
-        await fs.unlink(dpUrl)
-    }
-
     const updatedUser = await prisma.user.update({
         where: {
             id: userId,
@@ -178,6 +174,10 @@ router.put('/change-details', uplUserInputValidation, authentication, upload.sin
         })
     }
 
+    if (user.dpUrl) {
+        await fs.unlink(dpUrl)
+    }
+
     return res.status(200).json({
         msg: `User updated successfully with deatials: ${updatedUser}`
     })
@@ -196,7 +196,7 @@ router.delete('/delete-profile', [authentication], errForward(async (req, res) =
         }
     })
 
-    if(user.dpUrl) {
+    if (user.dpUrl) {
         await fs.unlink(dpUrl)
     }
 
